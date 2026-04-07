@@ -2,24 +2,24 @@ name: Flashlight APK Build
 
 on:
   push:
-    branches: [ "main" ] # আপনার মেইন ব্রাঞ্চের নাম অনুযায়ী পরিবর্তন করতে পারেন
+    branches: [ "main", "master" ] # মেইন বা মাস্টার যে কোনো ব্রাঞ্চে পুশ করলেই চলবে
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # নির্দিষ্ট ওএস ভার্সন দিলে বিল্ড স্টেবল হয়
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build with Buildozer
-        uses: ArtemSerebriakov/buildozer-action@v1.2
+        uses: ArtemSerebriakov/buildozer-action@v1
         with:
           command: buildozer android debug
           buildozer_version: master
 
       - name: Upload Finished APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # লেটেস্ট আপলোড ভার্সন
         with:
           name: Pro-Flashlight-APK
           path: bin/*.apk
